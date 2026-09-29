@@ -9,11 +9,16 @@ window.Tree = (function () {
   const AV_R = 30;                    // avatar radius
   const AV_CY = -NODE_H / 2 + 40;     // avatar centre (near the top)
   const DX = 178, DY = 200;           // sibling / generation spacing
+  const COUPLE_DX = 172;              // gap from a person to their spouse companion
 
-  let svg, gZoom, gLink, gNode, zoom;
+  let svg, gZoom, gLink, gCouple, gNode, gSpouse, zoom;
   let root, rootData;
   let onSelect = function () {};
   let width = 0, height = 0;
+  // Spouse-companion maps, rebuilt on every buildData():
+  //   companionOf[nodeId]   = spouseId drawn beside that tree node
+  //   isCompanion[spouseId] = the tree node id the spouse hangs off
+  let companionOf = {}, isCompanion = {};
 
   function primaryParentId(p) {
     if (p.fatherIds && p.fatherIds.length) return p.fatherIds[0];
@@ -21,12 +26,51 @@ window.Tree = (function () {
     return null;
   }
 
+  // True when a person descends from a real (non-dummy) primary parent.
+  function hasBloodParent(p) {
+    const pp = primaryParentId(p);
+    return !!(pp && !Store.isDummy(pp) && Store.get(pp));
+  }
+
+  // Decide, for each couple, which spouse stays a tree node and which is drawn
+  // as a companion beside them. The blood descendant keeps the node; a married-in
+  // spouse becomes the companion (so couples sit side by side, children below).
+  function assignCouples() {
+    companionOf = {}; isCompanion = {};
+    Store.all().forEach((p) => {
+      if (Store.isDummy(p.id)) return;
+      if (companionOf[p.id] || isCompanion[p.id]) return; // already has a role
+      const spouses = (p.spouseIds || [])
+        .map(Store.get).filter(Boolean).filter((s) => !Store.isDummy(s.id));
+      for (const s of spouses) {
+        if (companionOf[s.id] || isCompanion[s.id]) continue;
+        if (companionOf[p.id] || isCompanion[p.id]) break;
+        const pBlood = hasBloodParent(p), sBlood = hasBloodParent(s);
+        let nodeId, compId;
+        if (pBlood && !sBlood) { nodeId = p.id; compId = s.id; }
+        else if (sBlood && !pBlood) { nodeId = s.id; compId = p.id; }
+        else if (!pBlood && !sBlood) { // both top-level: pick a stable node
+          if (p.id <= s.id) { nodeId = p.id; compId = s.id; }
+          else { nodeId = s.id; compId = p.id; }
+        } else { continue; } // both blood: keep both in their own lineages
+        companionOf[nodeId] = compId;
+        isCompanion[compId] = nodeId;
+        break;
+      }
+    });
+  }
+
   // Build nested {id, children} spanning tree rooted at a synthetic couple node.
   function buildData() {
+    assignCouples();
     const childMap = {};
     Store.all().forEach((p) => {
       if (Store.isDummy(p.id)) return;
-      const pp = primaryParentId(p);
+      if (isCompanion[p.id]) return; // companions aren't their own tree nodes
+      let pp = primaryParentId(p);
+      // If the primary parent is a companion, hang the child off their partner
+      // node instead, so no child is lost when a married-in parent is hidden.
+      if (pp && isCompanion[pp]) pp = isCompanion[pp];
       // Missing or dummy primary parent → attach at the root couple.
       const key = !pp || Store.isDummy(pp) || !Store.get(pp) ? "__ROOT__" : pp;
       (childMap[key] = childMap[key] || []).push(p.id);
@@ -39,7 +83,7 @@ window.Tree = (function () {
         .filter((cid) => !visited.has(cid))
         .sort(byBirth)
         .map(node);
-      return { id: id, children: kids };
+      return { id: id, children: kids, companionId: companionOf[id] || null };
     }
     function byBirth(a, b) {
       const pa = Store.get(a), pb = Store.get(b);
@@ -60,7 +104,9 @@ window.Tree = (function () {
     svg = container.append("svg").attr("class", "tree-svg");
     gZoom = svg.append("g");
     gLink = gZoom.append("g").attr("class", "links");
+    gCouple = gZoom.append("g").attr("class", "couples"); // spouse connector lines
     gNode = gZoom.append("g").attr("class", "nodes");
+    gSpouse = gZoom.append("g").attr("class", "spouses"); // spouse companion nodes
 
     zoom = d3.zoom().scaleExtent([0.15, 2.5]).on("zoom", (e) => {
       gZoom.attr("transform", e.transform);
@@ -110,6 +156,13 @@ window.Tree = (function () {
       d._children = d.children; d.children = null;
     } else {
       d.children = d._children; d._children = null;
+      // Accordion: expanding one family collapses its siblings so only one
+      // family is open at each level under a given parent.
+      if (d.parent && d.parent.children) {
+        d.parent.children.forEach((sib) => {
+          if (sib !== d && sib.children) { sib._children = sib.children; sib.children = null; }
+        });
+      }
     }
     update(d);
   }
@@ -138,8 +191,46 @@ window.Tree = (function () {
     return p._photoPreview || p.photo || null;
   }
 
+  // Append the avatar (ring, circle, initials, optional photo) and the
+  // name/sub labels into an entering <g>. `idOf(d)` yields the person id.
+  function appendAvatarAndLabels(enter, idOf) {
+    enter.append("circle").attr("class", "avatar-ring")
+      .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R + 3);
+    enter.append("circle").attr("class", "avatar")
+      .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R);
+    enter.append("text").attr("class", "avatar-initials")
+      .attr("x", 0).attr("y", AV_CY + 6).attr("text-anchor", "middle")
+      .text((d) => initials(idOf(d)));
+    enter.each(function (d) {
+      const id = idOf(d);
+      const url = photoUrl(id);
+      if (!url) return;
+      const g = d3.select(this);
+      const clipId = "clip-" + id;
+      g.append("clipPath").attr("id", clipId).append("circle")
+        .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R);
+      const img = g.append("image").attr("class", "avatar-photo")
+        .attr("href", url)
+        .attr("x", -AV_R).attr("y", AV_CY - AV_R)
+        .attr("width", AV_R * 2).attr("height", AV_R * 2)
+        .attr("preserveAspectRatio", "xMidYMid slice")
+        .attr("clip-path", "url(#" + clipId + ")");
+      img.node().addEventListener("error", () => img.remove());
+    });
+    enter.append("text").attr("class", "name")
+      .attr("x", 0).attr("y", AV_CY + AV_R + 24).attr("text-anchor", "middle")
+      .text((d) => truncate(personLabel(idOf(d)), 18));
+    enter.append("text").attr("class", "sub")
+      .attr("x", 0).attr("y", AV_CY + AV_R + 44).attr("text-anchor", "middle")
+      .text((d) => subLabel(idOf(d)));
+  }
+
   function update(source) {
-    const tree = d3.tree().nodeSize([DX, DY]);
+    const tree = d3.tree().nodeSize([DX, DY]).separation((a, b) => {
+      const base = a.parent === b.parent ? 1 : 2;
+      // Leave an extra slot next to anyone showing a spouse companion.
+      return base + ((a.data.companionId || b.data.companionId) ? 1 : 0);
+    });
     tree(root);
 
     const nodes = root.descendants();
@@ -157,49 +248,8 @@ window.Tree = (function () {
         onSelect(d.data.id);
       });
 
-    // avatar ring + circle, centred near the top
-    nodeEnter.append("circle")
-      .attr("class", "avatar-ring")
-      .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R + 3);
-    nodeEnter.append("circle")
-      .attr("class", "avatar")
-      .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R);
-
-    nodeEnter.append("text")
-      .attr("class", "avatar-initials")
-      .attr("x", 0).attr("y", AV_CY + 6)
-      .attr("text-anchor", "middle")
-      .text((d) => initials(d.data.id));
-
-    // photo image (if any) laid over the circle; removes itself if it fails.
-    nodeEnter.each(function (d) {
-      const url = photoUrl(d.data.id);
-      if (!url) return;
-      const g = d3.select(this);
-      const clipId = "clip-" + d.data.id;
-      g.append("clipPath").attr("id", clipId).append("circle")
-        .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R);
-      const img = g.append("image")
-        .attr("class", "avatar-photo")
-        .attr("href", url)
-        .attr("x", -AV_R).attr("y", AV_CY - AV_R)
-        .attr("width", AV_R * 2).attr("height", AV_R * 2)
-        .attr("preserveAspectRatio", "xMidYMid slice")
-        .attr("clip-path", "url(#" + clipId + ")");
-      img.node().addEventListener("error", () => img.remove());
-    });
-
-    nodeEnter.append("text")
-      .attr("class", "name")
-      .attr("x", 0).attr("y", AV_CY + AV_R + 24)
-      .attr("text-anchor", "middle")
-      .text((d) => truncate(personLabel(d.data.id), 18));
-
-    nodeEnter.append("text")
-      .attr("class", "sub")
-      .attr("x", 0).attr("y", AV_CY + AV_R + 44)
-      .attr("text-anchor", "middle")
-      .text((d) => subLabel(d.data.id));
+    // avatar ring + circle + initials/photo + name/sub labels
+    appendAvatarAndLabels(nodeEnter, (d) => d.data.id);
 
     // expand/collapse toggle (only when node has descendants)
     const toggleG = nodeEnter.append("g")
@@ -243,6 +293,35 @@ window.Tree = (function () {
         return diagonal(o, o);
       }).remove();
 
+    // ----- Spouse companions (drawn beside their partner + a marriage line) -----
+    const couples = nodes
+      .filter((d) => d.data.companionId)
+      .map((d) => ({ id: d.data.companionId, x: d.x + COUPLE_DX, y: d.y, px: d.x, py: d.y }));
+
+    // marriage connector line (avatar-centre to avatar-centre)
+    const cline = gCouple.selectAll("line.couple-link").data(couples, (d) => d.id);
+    cline.enter().append("line").attr("class", "couple-link")
+      .attr("x1", () => source.x0).attr("y1", () => source.y0 + AV_CY)
+      .attr("x2", () => source.x0).attr("y2", () => source.y0 + AV_CY)
+      .merge(cline).transition().duration(200)
+      .attr("x1", (d) => d.px).attr("y1", (d) => d.py + AV_CY)
+      .attr("x2", (d) => d.x).attr("y2", (d) => d.y + AV_CY);
+    cline.exit().remove();
+
+    // companion node (same visual as a person, no toggle)
+    const sp = gSpouse.selectAll("g.node.spouse").data(couples, (d) => d.id);
+    const spEnter = sp.enter().append("g")
+      .attr("class", (d) => "node spouse gender-" + genderClass(d.id))
+      .attr("transform", () => "translate(" + source.x0 + "," + source.y0 + ")")
+      .style("cursor", "pointer")
+      .on("click", (e, d) => onSelect(d.id));
+    appendAvatarAndLabels(spEnter, (d) => d.id);
+    const spUpdate = spEnter.merge(sp);
+    spUpdate.transition().duration(200)
+      .attr("transform", (d) => "translate(" + d.x + "," + d.y + ")");
+    spUpdate.attr("class", (d) => "node spouse gender-" + genderClass(d.id));
+    sp.exit().remove();
+
     nodes.forEach((d) => { d.x0 = d.x; d.y0 = d.y; });
   }
 
@@ -270,7 +349,7 @@ window.Tree = (function () {
     if (!root) return;
     const nodes = root.descendants();
     const xs = nodes.map((d) => d.x), ys = nodes.map((d) => d.y);
-    const minX = Math.min(...xs) - NODE_W, maxX = Math.max(...xs) + NODE_W;
+    const minX = Math.min(...xs) - NODE_W, maxX = Math.max(...xs) + NODE_W + COUPLE_DX;
     const minY = Math.min(...ys) - NODE_H, maxY = Math.max(...ys) + NODE_H;
     const w = maxX - minX, h = maxY - minY;
     const scale = Math.min(2.5, Math.max(0.15, Math.min(width / w, height / h) * 0.95));
@@ -286,14 +365,19 @@ window.Tree = (function () {
 
   // Expand every ancestor of a node so it becomes visible, then focus it.
   function focusPerson(id) {
+    // A spouse companion isn't a tree node — navigate to its partner instead,
+    // but still highlight the companion itself.
+    const navId = isCompanion[id] ? isCompanion[id] : id;
     // Walk up primary-parent chain and expand each ancestor.
     const path = [];
-    let cur = Store.get(id);
+    let cur = Store.get(navId);
     const guard = new Set();
     while (cur && !guard.has(cur.id)) {
       guard.add(cur.id);
       path.unshift(cur.id);
-      const pp = primaryParentId(cur);
+      let pp = primaryParentId(cur);
+      // Follow the tree structure: a companion parent hangs off their partner.
+      if (pp && isCompanion[pp]) pp = isCompanion[pp];
       cur = pp && !Store.isDummy(pp) ? Store.get(pp) : null;
     }
     // Expand along the path from the root.
@@ -311,7 +395,7 @@ window.Tree = (function () {
     if (start) expandChain(start);
     update(root);
 
-    const target = root.descendants().find((d) => d.data.id === id);
+    const target = root.descendants().find((d) => d.data.id === navId);
     if (target) centerOn(target, id);
   }
 
@@ -326,7 +410,11 @@ window.Tree = (function () {
 
   function highlight(id) {
     gNode.selectAll("g.node").classed("highlight", (d) => d.data.id === id);
-    setTimeout(() => gNode.selectAll("g.node").classed("highlight", false), 2000);
+    gSpouse.selectAll("g.node.spouse").classed("highlight", (d) => d.id === id);
+    setTimeout(() => {
+      gNode.selectAll("g.node").classed("highlight", false);
+      gSpouse.selectAll("g.node.spouse").classed("highlight", false);
+    }, 2000);
   }
 
   return { init, render, fit, zoomIn: () => zoomBy(1.3), zoomOut: () => zoomBy(1 / 1.3), focusPerson };

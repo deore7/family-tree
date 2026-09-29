@@ -101,6 +101,9 @@ main { position: relative; height: calc(100% - 55px); }
 /* ------------------------------------------------------------------ */
 .link { fill: none; stroke: var(--line); stroke-width: 2px; stroke-linecap: round; }
 
+/* Marriage line connecting a person to their spouse companion */
+.couple-link { stroke: var(--root); stroke-width: 2.5px; stroke-linecap: round; }
+
 /* Colour halo behind the avatar (per gender) — doubles as the node border */
 .node .avatar-ring {
   fill: var(--other);
