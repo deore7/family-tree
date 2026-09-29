@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "people": {
+    "dummy-father": {
+      "id": "dummy-father",
+      "firstName": "Ancestor",
+      "lastName": "(Father)",
+      "gender": "male",
+      "isDefault": true,
+      "spouseIds": ["dummy-mother"],
+      "fatherIds": [],
+      "motherIds": [],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "phone": ""
+    },
+    "dummy-mother": {
+      "id": "dummy-mother",
+      "firstName": "Ancestor",
+      "lastName": "(Mother)",
+      "gender": "female",
+      "isDefault": true,
+      "spouseIds": ["dummy-father"],
+      "fatherIds": [],
+      "motherIds": [],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "phone": ""
+    }
+  }
+}
