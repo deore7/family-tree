@@ -6,7 +6,9 @@ window.Person = (function () {
   let cb = {};            // { onSave(data, photoFile), onDelete(id), canEdit() }
   let modal, form, detailPanel;
   let currentPhotoFile = null;
-  let lastLookup = null; // last pincode result, for village → taluka/district autofill
+  // Last pincode result per location group ("" native / "maher" / "sasar"),
+  // used to keep taluka/district in sync when a village is chosen.
+  let lastLookup = {};
 
   function init(callbacks) {
     cb = callbacks || {};
@@ -30,12 +32,15 @@ window.Person = (function () {
     const rows = [];
     const add = (label, val) => { if (val) rows.push(rowHtml(label, val)); };
     add("Gender", cap(p.gender));
+    add("Status", p.alive === false ? "Deceased" : "Living");
     add("Born", p.dob);
     add("Died", p.dod);
     add("Village", p.village);
     add("Taluka", p.taluka);
     add("District", p.district);
     add("Pincode", p.pincode);
+    add("Maher", locSummary(p.maher));
+    add("Sasar", locSummary(p.sasar));
     add("Phone", p.phone ? '<a href="tel:' + esc(p.phone) + '">' + esc(p.phone) + "</a>" : "");
     add("Father(s)", linkList(p.fatherIds));
     add("Mother(s)", linkList(p.motherIds));
@@ -109,16 +114,19 @@ window.Person = (function () {
       field("Mother(s) *", pickerHtml("mothers", mothers, "female")) +
       field("First name *", inputHtml("firstName", p.firstName)) +
       field("Last name *", inputHtml("lastName", p.lastName)) +
-      locationHtml(p) +
+      locationHtml(p, "", "") +
       // Everything else is tucked behind a "More details" toggle.
       '<button type="button" class="more-toggle" id="moreToggle" aria-expanded="false">' +
         "▸ More details</button>" +
       '<div class="more-details" id="moreDetails" style="display:none">' +
         field("Gender", selectHtml("gender", p.gender, [["male","Male"],["female","Female"],["other","Other"]])) +
+        checkboxField("alive", "Living (currently alive)", p.alive !== false) +
         field("Date of birth", inputHtml("dob", p.dob, "date")) +
         field("Date of death", inputHtml("dod", p.dod, "date")) +
         field("Phone", inputHtml("phone", p.phone, "tel")) +
         field("Photo", photoHtml(p)) +
+        locationHtml(p.maher, "maher", "Maher (parental home)") +
+        locationHtml(p.sasar, "sasar", "Sasar (in-laws' home)") +
         field("Spouse(s)", pickerHtml("spouses", spouses)) +
       "</div>" +
       '<input type="hidden" name="id" value="' + esc(id || "") + '">' +
@@ -132,7 +140,9 @@ window.Person = (function () {
     wirePicker("mothers");
     wirePicker("spouses");
     wirePhoto();
-    wireLocation(p);
+    wireLocation(p, "");
+    wireLocation(p.maher, "maher");
+    wireLocation(p.sasar, "sasar");
     wireMoreToggle();
     document.getElementById("editorCancelInline").onclick = closeEditor;
 
@@ -161,6 +171,7 @@ window.Person = (function () {
       firstName: fd.get("firstName") || "",
       lastName: fd.get("lastName") || "",
       gender: fd.get("gender") || "male",
+      alive: !!(form.querySelector('input[name="alive"]') || {}).checked,
       dob: fd.get("dob") || "",
       dod: fd.get("dod") || "",
       village: getCombo("village"),
@@ -169,6 +180,8 @@ window.Person = (function () {
       pincode: (form.querySelector("#pincode").value || "").trim(),
       phone: fd.get("phone") || "",
       photo: fd.get("photoUrl") || (Store.get(fd.get("id")) ? Store.get(fd.get("id")).photo : "") || "",
+      maher: getLoc("maher"),
+      sasar: getLoc("sasar"),
       fatherIds: getPicked("fathers"),
       motherIds: getPicked("mothers"),
       spouseIds: getPicked("spouses"),
@@ -195,6 +208,11 @@ window.Person = (function () {
     return '<select name="' + name + '">' +
       opts.map((o) => '<option value="' + o[0] + '"' + (o[0] === val ? " selected" : "") + ">" + o[1] + "</option>").join("") +
       "</select>";
+  }
+  // A single checkbox with an inline label (its own layout, not the .field grid).
+  function checkboxField(name, label, checked) {
+    return '<label class="check-field"><input type="checkbox" name="' + name + '"' +
+      (checked ? " checked" : "") + "><span>" + label + "</span></label>";
   }
   function photoHtml(p) {
     return '<div class="photo-field">' +
@@ -313,18 +331,34 @@ window.Person = (function () {
   }
 
   // ---------- Location (pincode + village/taluka/district dropdowns) ----------
-  function locationHtml(p) {
+  // Location groups: "" = native place (required), "maher" = parental home,
+  // "sasar" = in-laws' home. All three reuse the same combo + pincode machinery,
+  // keyed by a group prefix so their field names and element ids don't collide.
+  function fk(g, name) { return g ? g + "_" + name : name; }
+  function pinId(g) { return g ? g + "Pincode" : "pincode"; }
+  function pinLookupId(g) { return g ? g + "PincodeLookup" : "pincodeLookup"; }
+  function pinStatusId(g) { return g ? g + "PincodeStatus" : "pincodeStatus"; }
+  function groupOf(field) {
+    if (field.indexOf("maher_") === 0) return "maher";
+    if (field.indexOf("sasar_") === 0) return "sasar";
+    return "";
+  }
+
+  function locationHtml(loc, g, title) {
+    loc = loc || {};
+    const req = g ? "" : " *"; // only the native place is required
     return '<div class="location">' +
+      (title ? '<div class="loc-title">' + esc(title) + "</div>" : "") +
       field("Pincode (India)",
         '<div class="pincode-row">' +
-          '<input type="text" id="pincode" inputmode="numeric" maxlength="6" ' +
-            'placeholder="e.g. 380001" value="' + esc(p.pincode || "") + '">' +
-          '<button type="button" class="btn" id="pincodeLookup">Look up</button>' +
+          '<input type="text" id="' + pinId(g) + '" inputmode="numeric" maxlength="6" ' +
+            'placeholder="e.g. 380001" value="' + esc(loc.pincode || "") + '">' +
+          '<button type="button" class="btn" id="' + pinLookupId(g) + '">Look up</button>' +
         "</div>" +
-        '<p class="hint" id="pincodeStatus">Enter a 6-digit pincode to fill the fields below, or choose “Other” to type manually.</p>') +
-      field("Village / Area *", comboHtml("village", [], p.village)) +
-      field("Taluka *", comboHtml("taluka", [], p.taluka)) +
-      field("District *", comboHtml("district", [], p.district)) +
+        '<p class="hint" id="' + pinStatusId(g) + '">Enter a 6-digit pincode to fill the fields below, or choose “Other” to type manually.</p>') +
+      field("Village / Area" + req, comboHtml(fk(g, "village"), [], loc.village)) +
+      field("Taluka" + req, comboHtml(fk(g, "taluka"), [], loc.taluka)) +
+      field("District" + req, comboHtml(fk(g, "district"), [], loc.district)) +
       "</div>";
   }
 
@@ -369,15 +403,16 @@ window.Person = (function () {
     const wrap = form.querySelector('[data-combo="' + field + '"]');
     const sel = wrap.querySelector('[data-sel="' + field + '"]');
     const other = wrap.querySelector('[data-other="' + field + '"]');
+    const g = groupOf(field);
     sel.onchange = () => {
       const isOther = sel.value === "__other__";
       other.style.display = isOther ? "" : "none";
       if (isOther) other.focus();
       // Picking a village auto-fills taluka + district from the pincode data.
-      if (field === "village" && lastLookup && lastLookup.byVillage[sel.value]) {
-        const info = lastLookup.byVillage[sel.value];
-        setCombo("taluka", info.taluka);
-        setCombo("district", info.district);
+      if (field === fk(g, "village") && lastLookup[g] && lastLookup[g].byVillage[sel.value]) {
+        const info = lastLookup[g].byVillage[sel.value];
+        setCombo(fk(g, "taluka"), info.taluka);
+        setCombo(fk(g, "district"), info.district);
       }
     };
   }
@@ -403,47 +438,67 @@ window.Person = (function () {
     else { sel.value = ""; other.style.display = "none"; other.value = ""; }
   }
 
-  function wireLocation(p) {
-    wireCombo("village");
-    wireCombo("taluka");
-    wireCombo("district");
-    const pin = form.querySelector("#pincode");
-    const btn = form.querySelector("#pincodeLookup");
+  function wireLocation(loc, g) {
+    loc = loc || {};
+    wireCombo(fk(g, "village"));
+    wireCombo(fk(g, "taluka"));
+    wireCombo(fk(g, "district"));
+    const pin = form.querySelector("#" + pinId(g));
+    const btn = form.querySelector("#" + pinLookupId(g));
     // User-triggered lookups fill in the first values; the auto-lookup when
     // opening an existing person preserves their saved values instead.
-    btn.onclick = () => doLookup(true);
+    btn.onclick = () => doLookup(g, true);
     pin.addEventListener("input", () => {
       pin.value = pin.value.replace(/\D/g, "").slice(0, 6);
-      if (pin.value.length === 6) doLookup(true);
+      if (pin.value.length === 6) doLookup(g, true);
     });
-    if (p.pincode && /^\d{6}$/.test(p.pincode)) doLookup(false);
+    if (loc.pincode && /^\d{6}$/.test(loc.pincode)) doLookup(g, false);
   }
 
-  async function doLookup(autofill) {
-    const pin = form.querySelector("#pincode").value.trim();
-    const status = form.querySelector("#pincodeStatus");
+  async function doLookup(g, autofill) {
+    const pin = form.querySelector("#" + pinId(g)).value.trim();
+    const status = form.querySelector("#" + pinStatusId(g));
     status.textContent = "Looking up " + pin + "…";
     const res = await LocationAPI.lookup(pin);
     if (!res.ok) {
-      lastLookup = null;
+      lastLookup[g] = null;
       status.textContent = res.error + " You can still choose “Other” to type manually.";
       return;
     }
-    lastLookup = res;
-    populateCombo("village", res.villages);
-    populateCombo("taluka", res.talukas);
-    populateCombo("district", res.districts);
+    lastLookup[g] = res;
+    populateCombo(fk(g, "village"), res.villages);
+    populateCombo(fk(g, "taluka"), res.talukas);
+    populateCombo(fk(g, "district"), res.districts);
 
     // Fill in the first available option for each field (unless we're keeping
     // an existing person's saved values). Taluka/district follow the chosen
     // village so they stay consistent.
-    if (autofill || !getCombo("village")) setCombo("village", res.villages[0] || "");
-    const info = res.byVillage[getCombo("village")] || {};
-    if (autofill || !getCombo("taluka")) setCombo("taluka", info.taluka || res.talukas[0] || "");
-    if (autofill || !getCombo("district")) setCombo("district", info.district || res.districts[0] || "");
+    if (autofill || !getCombo(fk(g, "village"))) setCombo(fk(g, "village"), res.villages[0] || "");
+    const info = res.byVillage[getCombo(fk(g, "village"))] || {};
+    if (autofill || !getCombo(fk(g, "taluka"))) setCombo(fk(g, "taluka"), info.taluka || res.talukas[0] || "");
+    if (autofill || !getCombo(fk(g, "district"))) setCombo(fk(g, "district"), info.district || res.districts[0] || "");
 
     status.textContent = "Found " + res.villages.length + " area(s) in " +
       (res.districts[0] || "") + (res.state ? ", " + res.state : "") + ".";
+  }
+
+  // Read a location group ("" native / "maher" / "sasar") back out of the form.
+  function getLoc(g) {
+    return {
+      village: getCombo(fk(g, "village")),
+      taluka: getCombo(fk(g, "taluka")),
+      district: getCombo(fk(g, "district")),
+      pincode: ((form.querySelector("#" + pinId(g)) || {}).value || "").trim(),
+    };
+  }
+
+  // "village, taluka, district (pincode)" for the detail panel — "" if empty.
+  function locSummary(loc) {
+    if (!loc) return "";
+    const parts = [loc.village, loc.taluka, loc.district].filter((s) => s && s.trim());
+    let s = parts.join(", ");
+    if (loc.pincode) s += (s ? " " : "") + "(" + loc.pincode + ")";
+    return s ? esc(s) : "";
   }
 
   function wirePhoto() {

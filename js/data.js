@@ -8,6 +8,15 @@ window.Store = (function () {
   const DUMMY_FATHER = "dummy-father";
   const DUMMY_MOTHER = "dummy-mother";
 
+  // A location group: village/taluka/district/pincode. Used for the person's
+  // native place and for their maher (parental home) and sasar (in-laws' home).
+  function blankLocation() {
+    return { village: "", taluka: "", district: "", pincode: "" };
+  }
+  function normalizeLocation(loc) {
+    return Object.assign(blankLocation(), loc || {});
+  }
+
   function blankPerson() {
     return {
       id: "",
@@ -15,6 +24,7 @@ window.Store = (function () {
       lastName: "",
       gender: "male",
       isDefault: false,
+      alive: true,
       spouseIds: [],
       fatherIds: [],
       motherIds: [],
@@ -26,15 +36,21 @@ window.Store = (function () {
       district: "",
       pincode: "",
       phone: "",
+      maher: blankLocation(),
+      sasar: blankLocation(),
     };
   }
 
   // Ensure every person has all fields so the rest of the app can rely on them.
   function normalizePerson(p) {
     return Object.assign(blankPerson(), p, {
+      // Missing `alive` (older data) defaults to true.
+      alive: p.alive === undefined ? true : !!p.alive,
       spouseIds: (p.spouseIds || []).slice(),
       fatherIds: (p.fatherIds || []).slice(),
       motherIds: (p.motherIds || []).slice(),
+      maher: normalizeLocation(p.maher),
+      sasar: normalizeLocation(p.sasar),
     });
   }
 
@@ -166,6 +182,11 @@ window.Store = (function () {
     ["firstName", "lastName", "village", "taluka", "district", "pincode", "phone", "photo"].forEach((k) => {
       if (typeof person[k] === "string") person[k] = person[k].trim();
     });
+    ["maher", "sasar"].forEach((grp) => {
+      ["village", "taluka", "district", "pincode"].forEach((k) => {
+        if (typeof person[grp][k] === "string") person[grp][k] = person[grp][k].trim();
+      });
+    });
 
     state.people[id] = person;
     syncSpouses(id, prevSpouses, person.spouseIds);
@@ -195,6 +216,7 @@ window.Store = (function () {
         firstName: p.firstName,
         lastName: p.lastName,
         gender: p.gender,
+        alive: p.alive !== false,
         spouseIds: p.spouseIds,
         fatherIds: p.fatherIds,
         motherIds: p.motherIds,
@@ -206,6 +228,8 @@ window.Store = (function () {
         district: p.district,
         pincode: p.pincode,
         phone: p.phone,
+        maher: normalizeLocation(p.maher),
+        sasar: normalizeLocation(p.sasar),
       };
       if (p.isDefault) people[p.id].isDefault = true;
     });

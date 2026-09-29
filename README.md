@@ -7,8 +7,9 @@ device.
 
 ## Features
 - Collapsible, pan/zoom tree (D3) built for large families — distant branches start collapsed.
-- Stores: name (first/last), gender, spouse(s), **multiple fathers/mothers**, sons/daughters
-  (derived), date of birth, date of death, photo, village/taluka/district, phone.
+- Stores: name (first/last), gender, **living/deceased** status, spouse(s), **multiple
+  fathers/mothers**, sons/daughters (derived), date of birth, date of death, photo, native
+  village/taluka/district, **maher** (parental home) & **sasar** (in-laws' home) locations, phone.
 - Search with live suggestions ("firstname fathername lastname (village)") to jump to a person.
 - Add / edit / delete people behind a simple edit password. The add/edit form shows the required
   fields first, with everything optional tucked under a **More details** toggle.
@@ -56,6 +57,27 @@ Editing needs a token so the browser can commit changes:
 When you **Save to GitHub**: staged photos are uploaded to `photos/`, then `data/family.json`
 is committed with your changes. GitHub Pages redeploys within a minute or two.
 
+## Bulk import from a CSV (one-time data entry)
+Rather than adding everyone through the UI, you can fill in a spreadsheet once and convert it.
+
+1. Open [`data/family_template.csv`](data/family_template.csv) in Excel / Google Sheets. Replace
+   the sample rows with your family. Give each person a unique **member_id** number (1, 2, 3, …);
+   link relationships by putting those numbers in **father_id / mother_id / spouse_id** (separate
+   multiple ids with `;`). Leave father_id / mother_id **blank** for a top-level person — they
+   are attached to the default ancestors automatically. Required columns: firstName, lastName,
+   village, taluka, district. `gender` accepts `male`/`female`/`other` or short `M`/`F`/`O`
+   (blank ⇒ other). Optional extras: `alive` (yes/no — defaults to yes unless `dod` is set),
+   and maher/sasar locations via `maher_village|taluka|district|pincode` and the matching
+   `sasar_*` columns.
+2. Run the converter (Python 3, no extra packages):
+   ```bash
+   python tools/csv_to_json.py                 # data/family_template.csv -> data/family.json
+   # or: python tools/csv_to_json.py my.csv     # use your own CSV file
+   ```
+   It seeds the default ancestors, makes spouse links mutual, and prints warnings for any
+   missing required fields or unknown id references. **It overwrites `data/family.json`.**
+3. Commit the regenerated `data/family.json` (and push, so Pages redeploys).
+
 ## Project layout
 ```
 index.html         App shell + script includes
@@ -69,6 +91,8 @@ js/person.js       Detail panel + add/edit/delete form
 js/location.js     Indian pincode lookup (India Post API) for village/taluka/district
 js/app.js          Bootstrap, toolbar wiring, edit mode, commit flow
 js/vendor/d3.min.js  D3 v7 (vendored locally — no CDN, works offline)
-data/family.json   The family data (seeded with the default ancestors)
-photos/            Uploaded photos land here
+data/family.json          The family data (seeded with the default ancestors)
+data/family_template.csv  Fill-in-once CSV for bulk data entry
+tools/csv_to_json.py      Converts the CSV into data/family.json
+photos/                   Uploaded photos land here
 ```

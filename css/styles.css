@@ -196,6 +196,17 @@ main { position: relative; height: calc(100% - 55px); }
 .pincode-row input { flex: 1; letter-spacing: 2px; }
 .combo { display: flex; flex-direction: column; gap: 6px; }
 .combo select { width: 100%; }
+.loc-title {
+  font-size: 13px; font-weight: 600; color: var(--ink);
+  margin: 4px 0 10px; padding-top: 10px; border-top: 1px solid var(--line);
+}
+
+/* Inline checkbox (e.g. Living) */
+.check-field {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  font-size: 14px; color: var(--ink); cursor: pointer;
+}
+.check-field input { width: 16px; height: 16px; flex: 0 0 auto; }
 
 /* "More details" collapsible section */
 .more-toggle {

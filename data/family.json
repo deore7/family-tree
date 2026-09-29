@@ -6,8 +6,10 @@
       "firstName": "Ancestor",
       "lastName": "(Father)",
       "gender": "male",
-      "isDefault": true,
-      "spouseIds": ["dummy-mother"],
+      "alive": true,
+      "spouseIds": [
+        "dummy-mother"
+      ],
       "fatherIds": [],
       "motherIds": [],
       "dob": "",
@@ -16,15 +18,31 @@
       "village": "",
       "taluka": "",
       "district": "",
-      "phone": ""
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "isDefault": true
     },
     "dummy-mother": {
       "id": "dummy-mother",
       "firstName": "Ancestor",
       "lastName": "(Mother)",
       "gender": "female",
-      "isDefault": true,
-      "spouseIds": ["dummy-father"],
+      "alive": true,
+      "spouseIds": [
+        "dummy-father"
+      ],
       "fatherIds": [],
       "motherIds": [],
       "dob": "",
@@ -33,7 +51,1783 @@
       "village": "",
       "taluka": "",
       "district": "",
-      "phone": ""
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "isDefault": true
+    },
+    "1": {
+      "id": "1",
+      "firstName": "Bhavdu",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "2": {
+      "id": "2",
+      "firstName": "Shankar",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "3"
+      ],
+      "fatherIds": [
+        "1"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "3": {
+      "id": "3",
+      "firstName": "Bhilabai",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "2"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "4": {
+      "id": "4",
+      "firstName": "Motiram",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "9"
+      ],
+      "fatherIds": [
+        "2"
+      ],
+      "motherIds": [
+        "3"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "5": {
+      "id": "5",
+      "firstName": "Dharma",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "10"
+      ],
+      "fatherIds": [
+        "2"
+      ],
+      "motherIds": [
+        "3"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "6": {
+      "id": "6",
+      "firstName": "Bhavrao",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "11"
+      ],
+      "fatherIds": [
+        "2"
+      ],
+      "motherIds": [
+        "3"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "7": {
+      "id": "7",
+      "firstName": "Murlidhar",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "12"
+      ],
+      "fatherIds": [
+        "2"
+      ],
+      "motherIds": [
+        "3"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "8": {
+      "id": "8",
+      "firstName": "Reshmabai",
+      "lastName": "Shewale",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "13"
+      ],
+      "fatherIds": [
+        "2"
+      ],
+      "motherIds": [
+        "3"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "9": {
+      "id": "9",
+      "firstName": "Anjabai",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "4"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "10": {
+      "id": "10",
+      "firstName": "Sumanbai",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "5"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "11": {
+      "id": "11",
+      "firstName": "Sulkanbai",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "6"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "12": {
+      "id": "12",
+      "firstName": "Shantabai",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "7"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "13": {
+      "id": "13",
+      "firstName": "Sawkar",
+      "lastName": "Shewale",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "8"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "14": {
+      "id": "14",
+      "firstName": "Latabai",
+      "lastName": "Ahire",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "18"
+      ],
+      "fatherIds": [
+        "4"
+      ],
+      "motherIds": [
+        "9"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "15": {
+      "id": "15",
+      "firstName": "Chitrabai",
+      "lastName": "Pawar",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "19"
+      ],
+      "fatherIds": [
+        "4"
+      ],
+      "motherIds": [
+        "9"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "16": {
+      "id": "16",
+      "firstName": "Amrut",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "20"
+      ],
+      "fatherIds": [
+        "4"
+      ],
+      "motherIds": [
+        "9"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "17": {
+      "id": "17",
+      "firstName": "Rajendra",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "21"
+      ],
+      "fatherIds": [
+        "4"
+      ],
+      "motherIds": [
+        "9"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "18": {
+      "id": "18",
+      "firstName": "Madhukar",
+      "lastName": "Ahire",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "14"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "19": {
+      "id": "19",
+      "firstName": "Pandit",
+      "lastName": "Pawar",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "15"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "20": {
+      "id": "20",
+      "firstName": "Mangal",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "16"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "21": {
+      "id": "21",
+      "firstName": "Sunita",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "17"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "22": {
+      "id": "22",
+      "firstName": "Pratap",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "25"
+      ],
+      "fatherIds": [
+        "5"
+      ],
+      "motherIds": [
+        "10"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "23": {
+      "id": "23",
+      "firstName": "Chandrakant",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "26"
+      ],
+      "fatherIds": [
+        "5"
+      ],
+      "motherIds": [
+        "10"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "24": {
+      "id": "24",
+      "firstName": "Suman",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "27"
+      ],
+      "fatherIds": [
+        "5"
+      ],
+      "motherIds": [
+        "10"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "25": {
+      "id": "25",
+      "firstName": "Jijabai",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "22"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "26": {
+      "id": "26",
+      "firstName": "Jyoti",
+      "lastName": "Deore",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "23"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "27": {
+      "id": "27",
+      "firstName": "NA",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "24"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "28": {
+      "id": "28",
+      "firstName": "Vimal",
+      "lastName": "",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "34"
+      ],
+      "fatherIds": [
+        "6"
+      ],
+      "motherIds": [
+        "11"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "29": {
+      "id": "29",
+      "firstName": "Ashok",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "35"
+      ],
+      "fatherIds": [
+        "6"
+      ],
+      "motherIds": [
+        "11"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "30": {
+      "id": "30",
+      "firstName": "Sudam",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "36"
+      ],
+      "fatherIds": [
+        "6"
+      ],
+      "motherIds": [
+        "11"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "31": {
+      "id": "31",
+      "firstName": "Manik",
+      "lastName": "Deore",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "37"
+      ],
+      "fatherIds": [
+        "6"
+      ],
+      "motherIds": [
+        "11"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "32": {
+      "id": "32",
+      "firstName": "Shobha",
+      "lastName": "",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "38"
+      ],
+      "fatherIds": [
+        "6"
+      ],
+      "motherIds": [
+        "11"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "33": {
+      "id": "33",
+      "firstName": "Pamabai",
+      "lastName": "",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "39"
+      ],
+      "fatherIds": [
+        "6"
+      ],
+      "motherIds": [
+        "11"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "34": {
+      "id": "34",
+      "firstName": "NA",
+      "lastName": "",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "28"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "35": {
+      "id": "35",
+      "firstName": "Tarabai",
+      "lastName": "",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "29"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "36": {
+      "id": "36",
+      "firstName": "Archana",
+      "lastName": "",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "30"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "37": {
+      "id": "37",
+      "firstName": "Chhaya",
+      "lastName": "",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "31"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "38": {
+      "id": "38",
+      "firstName": "NA",
+      "lastName": "",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "32"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "39": {
+      "id": "39",
+      "firstName": "NA",
+      "lastName": "",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "33"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "40": {
+      "id": "40",
+      "firstName": "Sulabai",
+      "lastName": "",
+      "gender": "female",
+      "alive": true,
+      "spouseIds": [
+        "45"
+      ],
+      "fatherIds": [
+        "7"
+      ],
+      "motherIds": [
+        "12"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "41": {
+      "id": "41",
+      "firstName": "Kailas",
+      "lastName": "",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "46"
+      ],
+      "fatherIds": [
+        "7"
+      ],
+      "motherIds": [
+        "12"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "42": {
+      "id": "42",
+      "firstName": "Sangita",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "47"
+      ],
+      "fatherIds": [
+        "7"
+      ],
+      "motherIds": [
+        "12"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "43": {
+      "id": "43",
+      "firstName": "Aaba",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "48"
+      ],
+      "fatherIds": [
+        "7"
+      ],
+      "motherIds": [
+        "12"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "44": {
+      "id": "44",
+      "firstName": "Chhoti",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "49"
+      ],
+      "fatherIds": [
+        "7"
+      ],
+      "motherIds": [
+        "12"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "45": {
+      "id": "45",
+      "firstName": "NA",
+      "lastName": "",
+      "gender": "male",
+      "alive": true,
+      "spouseIds": [
+        "40"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "46": {
+      "id": "46",
+      "firstName": "Kalabai",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "41"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "47": {
+      "id": "47",
+      "firstName": "Kishor",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "42"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "48": {
+      "id": "48",
+      "firstName": "Pratibha",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "43"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "49": {
+      "id": "49",
+      "firstName": "Popat",
+      "lastName": "",
+      "gender": "other",
+      "alive": true,
+      "spouseIds": [
+        "44"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
     }
   }
 }
