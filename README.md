@@ -7,7 +7,7 @@ device.
 
 ## Features
 - Collapsible, pan/zoom tree (D3) built for large families — distant branches start collapsed.
-- Stores: name (first/last), gender, **living/deceased** status, spouse(s), **multiple
+- Stores: name (first/last), gender, **living/deceased** & **married** status, spouse(s), **multiple
   fathers/mothers**, sons/daughters (derived), date of birth, date of death, photo, and four
   locations — native place, **current** location, **maher** (parental home) & **sasar**
   (in-laws' home) — each village/taluka/district/pincode, plus phone.

@@ -7,6 +7,7 @@
       "lastName": "(Father)",
       "gender": "male",
       "alive": true,
+      "married": false,
       "spouseIds": [
         "dummy-mother"
       ],
@@ -46,6 +47,7 @@
       "lastName": "(Mother)",
       "gender": "female",
       "alive": true,
+      "married": false,
       "spouseIds": [
         "dummy-father"
       ],
@@ -85,6 +87,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": false,
       "spouseIds": [],
       "fatherIds": [
         "dummy-father"
@@ -125,6 +128,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "3"
       ],
@@ -167,6 +171,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "2"
       ],
@@ -209,6 +214,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "9"
       ],
@@ -251,6 +257,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "10"
       ],
@@ -293,6 +300,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "11"
       ],
@@ -335,6 +343,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "12"
       ],
@@ -377,6 +386,7 @@
       "lastName": "Shewale",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "13"
       ],
@@ -419,6 +429,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "4"
       ],
@@ -461,6 +472,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "5"
       ],
@@ -503,6 +515,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "6"
       ],
@@ -545,6 +558,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "7"
       ],
@@ -587,6 +601,7 @@
       "lastName": "Shewale",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "8"
       ],
@@ -629,6 +644,7 @@
       "lastName": "Ahire",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "18"
       ],
@@ -671,6 +687,7 @@
       "lastName": "Pawar",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "19"
       ],
@@ -713,6 +730,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "20"
       ],
@@ -755,6 +773,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "21"
       ],
@@ -797,6 +816,7 @@
       "lastName": "Ahire",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "14"
       ],
@@ -839,6 +859,7 @@
       "lastName": "Pawar",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "15"
       ],
@@ -881,6 +902,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "16"
       ],
@@ -923,6 +945,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "17"
       ],
@@ -965,6 +988,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "25"
       ],
@@ -1007,6 +1031,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "26"
       ],
@@ -1049,6 +1074,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "27"
       ],
@@ -1091,6 +1117,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "22"
       ],
@@ -1133,6 +1160,7 @@
       "lastName": "Deore",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "23"
       ],
@@ -1175,6 +1203,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "24"
       ],
@@ -1217,6 +1246,7 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "34"
       ],
@@ -1259,6 +1289,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "35"
       ],
@@ -1301,6 +1332,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "36"
       ],
@@ -1343,6 +1375,7 @@
       "lastName": "Deore",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "37"
       ],
@@ -1385,6 +1418,7 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "38"
       ],
@@ -1427,6 +1461,7 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "39"
       ],
@@ -1469,6 +1504,7 @@
       "lastName": "",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "28"
       ],
@@ -1511,6 +1547,7 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "29"
       ],
@@ -1553,6 +1590,7 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "30"
       ],
@@ -1595,6 +1633,7 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "31"
       ],
@@ -1637,6 +1676,7 @@
       "lastName": "",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "32"
       ],
@@ -1679,6 +1719,7 @@
       "lastName": "",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "33"
       ],
@@ -1721,6 +1762,7 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "45"
       ],
@@ -1763,6 +1805,7 @@
       "lastName": "",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "46"
       ],
@@ -1805,6 +1848,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "47"
       ],
@@ -1847,6 +1891,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "48"
       ],
@@ -1889,6 +1934,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "49"
       ],
@@ -1931,6 +1977,7 @@
       "lastName": "",
       "gender": "male",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "40"
       ],
@@ -1973,6 +2020,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "41"
       ],
@@ -2015,6 +2063,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "42"
       ],
@@ -2057,6 +2106,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "43"
       ],
@@ -2099,6 +2149,7 @@
       "lastName": "",
       "gender": "other",
       "alive": true,
+      "married": true,
       "spouseIds": [
         "44"
       ],

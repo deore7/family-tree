@@ -33,6 +33,7 @@ window.Person = (function () {
     const add = (label, val) => { if (val) rows.push(rowHtml(label, val)); };
     add("Gender", cap(p.gender));
     add("Status", p.alive === false ? "Deceased" : "Living");
+    add("Married", p.married ? "Yes" : "No");
     add("Born", p.dob);
     add("Died", p.dod);
     add("Village", p.village);
@@ -122,6 +123,7 @@ window.Person = (function () {
       '<div class="more-details" id="moreDetails" style="display:none">' +
         field("Gender", selectHtml("gender", p.gender, [["male","Male"],["female","Female"],["other","Other"]])) +
         checkboxField("alive", "Living (currently alive)", p.alive !== false) +
+        checkboxField("married", "Married", !!p.married) +
         field("Date of birth", inputHtml("dob", p.dob, "date")) +
         field("Date of death", inputHtml("dod", p.dod, "date")) +
         field("Phone", inputHtml("phone", p.phone, "tel")) +
@@ -175,6 +177,7 @@ window.Person = (function () {
       lastName: fd.get("lastName") || "",
       gender: fd.get("gender") || "male",
       alive: !!(form.querySelector('input[name="alive"]') || {}).checked,
+      married: !!(form.querySelector('input[name="married"]') || {}).checked,
       dob: fd.get("dob") || "",
       dod: fd.get("dod") || "",
       village: getCombo("village"),

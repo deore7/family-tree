@@ -21,6 +21,7 @@ CSV COLUMNS (header row, in any order; extra columns are ignored)
                 made mutual automatically)
     alive       yes/no (or true/false) — is the person living? Defaults to yes,
                 unless a date of death is given or a `deceased` column says so.
+    married     yes/no — defaults to yes when a spouse_id is given, else no.
     dob         date of birth, YYYY-MM-DD  (optional)
     dod         date of death, YYYY-MM-DD  (optional; implies alive = no)
     village     * required   (native place)
@@ -111,7 +112,7 @@ def blank_location():
 def blank_person(pid):
     return {
         "id": pid, "firstName": "", "lastName": "", "gender": "other",
-        "alive": True,
+        "alive": True, "married": False,
         "spouseIds": [], "fatherIds": [], "motherIds": [],
         "dob": "", "dod": "", "photo": "",
         "village": "", "taluka": "", "district": "", "pincode": "", "phone": "",
@@ -188,6 +189,13 @@ def main():
             if alive_val:
                 alive = parse_bool(alive_val, alive)
             p["alive"] = alive
+
+            # Married unless a column says otherwise; defaults to "has a spouse".
+            married = bool(first_value(row, LIST_COLUMNS["spouseIds"]))
+            married_val = first_value(row, ("married", "wedded"))
+            if married_val:
+                married = parse_bool(married_val, married)
+            p["married"] = married
 
             # Optional maher / sasar location groups.
             for grp, cols in LOCATION_GROUPS.items():

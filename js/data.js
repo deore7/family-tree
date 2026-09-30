@@ -25,6 +25,7 @@ window.Store = (function () {
       gender: "male",
       isDefault: false,
       alive: true,
+      married: false,
       spouseIds: [],
       fatherIds: [],
       motherIds: [],
@@ -47,6 +48,8 @@ window.Store = (function () {
     return Object.assign(blankPerson(), p, {
       // Missing `alive` (older data) defaults to true.
       alive: p.alive === undefined ? true : !!p.alive,
+      // Missing `married` defaults to "has at least one spouse".
+      married: p.married === undefined ? (p.spouseIds || []).length > 0 : !!p.married,
       spouseIds: (p.spouseIds || []).slice(),
       fatherIds: (p.fatherIds || []).slice(),
       motherIds: (p.motherIds || []).slice(),
@@ -219,6 +222,7 @@ window.Store = (function () {
         lastName: p.lastName,
         gender: p.gender,
         alive: p.alive !== false,
+        married: !!p.married,
         spouseIds: p.spouseIds,
         fatherIds: p.fatherIds,
         motherIds: p.motherIds,
