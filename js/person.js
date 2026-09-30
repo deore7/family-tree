@@ -39,6 +39,7 @@ window.Person = (function () {
     add("Taluka", p.taluka);
     add("District", p.district);
     add("Pincode", p.pincode);
+    add("Current", locSummary(p.current));
     add("Maher", locSummary(p.maher));
     add("Sasar", locSummary(p.sasar));
     add("Phone", p.phone ? '<a href="tel:' + esc(p.phone) + '">' + esc(p.phone) + "</a>" : "");
@@ -114,7 +115,7 @@ window.Person = (function () {
       field("Mother(s) *", pickerHtml("mothers", mothers, "female")) +
       field("First name *", inputHtml("firstName", p.firstName)) +
       field("Last name *", inputHtml("lastName", p.lastName)) +
-      locationHtml(p, "", "") +
+      locationHtml(p, "", "Native place") +
       // Everything else is tucked behind a "More details" toggle.
       '<button type="button" class="more-toggle" id="moreToggle" aria-expanded="false">' +
         "▸ More details</button>" +
@@ -125,6 +126,7 @@ window.Person = (function () {
         field("Date of death", inputHtml("dod", p.dod, "date")) +
         field("Phone", inputHtml("phone", p.phone, "tel")) +
         field("Photo", photoHtml(p)) +
+        locationHtml(p.current, "current", "Current location") +
         locationHtml(p.maher, "maher", "Maher (parental home)") +
         locationHtml(p.sasar, "sasar", "Sasar (in-laws' home)") +
         field("Spouse(s)", pickerHtml("spouses", spouses)) +
@@ -141,6 +143,7 @@ window.Person = (function () {
     wirePicker("spouses");
     wirePhoto();
     wireLocation(p, "");
+    wireLocation(p.current, "current");
     wireLocation(p.maher, "maher");
     wireLocation(p.sasar, "sasar");
     wireMoreToggle();
@@ -180,6 +183,7 @@ window.Person = (function () {
       pincode: (form.querySelector("#pincode").value || "").trim(),
       phone: fd.get("phone") || "",
       photo: fd.get("photoUrl") || (Store.get(fd.get("id")) ? Store.get(fd.get("id")).photo : "") || "",
+      current: getLoc("current"),
       maher: getLoc("maher"),
       sasar: getLoc("sasar"),
       fatherIds: getPicked("fathers"),
@@ -339,6 +343,7 @@ window.Person = (function () {
   function pinLookupId(g) { return g ? g + "PincodeLookup" : "pincodeLookup"; }
   function pinStatusId(g) { return g ? g + "PincodeStatus" : "pincodeStatus"; }
   function groupOf(field) {
+    if (field.indexOf("current_") === 0) return "current";
     if (field.indexOf("maher_") === 0) return "maher";
     if (field.indexOf("sasar_") === 0) return "sasar";
     return "";

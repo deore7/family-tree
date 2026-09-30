@@ -36,6 +36,7 @@ window.Store = (function () {
       district: "",
       pincode: "",
       phone: "",
+      current: blankLocation(),
       maher: blankLocation(),
       sasar: blankLocation(),
     };
@@ -49,6 +50,7 @@ window.Store = (function () {
       spouseIds: (p.spouseIds || []).slice(),
       fatherIds: (p.fatherIds || []).slice(),
       motherIds: (p.motherIds || []).slice(),
+      current: normalizeLocation(p.current),
       maher: normalizeLocation(p.maher),
       sasar: normalizeLocation(p.sasar),
     });
@@ -182,7 +184,7 @@ window.Store = (function () {
     ["firstName", "lastName", "village", "taluka", "district", "pincode", "phone", "photo"].forEach((k) => {
       if (typeof person[k] === "string") person[k] = person[k].trim();
     });
-    ["maher", "sasar"].forEach((grp) => {
+    ["current", "maher", "sasar"].forEach((grp) => {
       ["village", "taluka", "district", "pincode"].forEach((k) => {
         if (typeof person[grp][k] === "string") person[grp][k] = person[grp][k].trim();
       });
@@ -228,6 +230,7 @@ window.Store = (function () {
         district: p.district,
         pincode: p.pincode,
         phone: p.phone,
+        current: normalizeLocation(p.current),
         maher: normalizeLocation(p.maher),
         sasar: normalizeLocation(p.sasar),
       };

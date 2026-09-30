@@ -29,6 +29,8 @@ CSV COLUMNS (header row, in any order; extra columns are ignored)
     pincode     6-digit Indian pincode  (optional)
     phone       (optional)
     photo       path in repo (e.g. photos/amit.jpg) or an image URL  (optional)
+    current_village / current_taluka / current_district / current_pincode  (optional)
+                where the person currently lives
     maher_village / maher_taluka / maher_district / maher_pincode   (optional)
                 the person's maher (parental home) location
     sasar_village / sasar_taluka / sasar_district / sasar_pincode   (optional)
@@ -69,6 +71,7 @@ ID_COLUMNS = ("member_id", "id")
 # Extra location groups (native place lives in the flat village/... columns).
 # maher = parental home, sasar = in-laws' home. All optional.
 LOCATION_GROUPS = {
+    "current": ("current_village", "current_taluka", "current_district", "current_pincode"),
     "maher": ("maher_village", "maher_taluka", "maher_district", "maher_pincode"),
     "sasar": ("sasar_village", "sasar_taluka", "sasar_district", "sasar_pincode"),
 }
@@ -112,7 +115,7 @@ def blank_person(pid):
         "spouseIds": [], "fatherIds": [], "motherIds": [],
         "dob": "", "dod": "", "photo": "",
         "village": "", "taluka": "", "district": "", "pincode": "", "phone": "",
-        "maher": blank_location(), "sasar": blank_location(),
+        "current": blank_location(), "maher": blank_location(), "sasar": blank_location(),
     }
 
 

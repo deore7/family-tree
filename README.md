@@ -8,8 +8,9 @@ device.
 ## Features
 - Collapsible, pan/zoom tree (D3) built for large families — distant branches start collapsed.
 - Stores: name (first/last), gender, **living/deceased** status, spouse(s), **multiple
-  fathers/mothers**, sons/daughters (derived), date of birth, date of death, photo, native
-  village/taluka/district, **maher** (parental home) & **sasar** (in-laws' home) locations, phone.
+  fathers/mothers**, sons/daughters (derived), date of birth, date of death, photo, and four
+  locations — native place, **current** location, **maher** (parental home) & **sasar**
+  (in-laws' home) — each village/taluka/district/pincode, plus phone.
 - Search with live suggestions ("firstname fathername lastname (village)") to jump to a person.
 - Add / edit / delete people behind a simple edit password. The add/edit form shows the required
   fields first, with everything optional tucked under a **More details** toggle.
@@ -67,8 +68,8 @@ Rather than adding everyone through the UI, you can fill in a spreadsheet once a
    are attached to the default ancestors automatically. Required columns: firstName, lastName,
    village, taluka, district. `gender` accepts `male`/`female`/`other` or short `M`/`F`/`O`
    (blank ⇒ other). Optional extras: `alive` (yes/no — defaults to yes unless `dod` is set),
-   and maher/sasar locations via `maher_village|taluka|district|pincode` and the matching
-   `sasar_*` columns.
+   and the current/maher/sasar locations via `current_village|taluka|district|pincode` and the
+   matching `maher_*` and `sasar_*` columns.
 2. Run the converter (Python 3, no extra packages):
    ```bash
    python tools/csv_to_json.py                 # data/family_template.csv -> data/family.json

@@ -9,7 +9,7 @@ window.Tree = (function () {
   const AV_R = 30;                    // avatar radius
   const AV_CY = -NODE_H / 2 + 40;     // avatar centre (near the top)
   const DX = 178, DY = 200;           // sibling / generation spacing
-  const COUPLE_DX = 172;              // gap from a person to their spouse companion
+  const COUPLE_DX = 96;               // gap from a person to their spouse companion
 
   let svg, gZoom, gLink, gCouple, gNode, gSpouse, zoom;
   let root, rootData;
@@ -19,6 +19,11 @@ window.Tree = (function () {
   //   companionOf[nodeId]   = spouseId drawn beside that tree node
   //   isCompanion[spouseId] = the tree node id the spouse hangs off
   let companionOf = {}, isCompanion = {};
+
+  // A node shows its spouse companion only while its children are expanded.
+  function hasVisibleCompanion(d) {
+    return !!(d.data.companionId && d.children && d.children.length);
+  }
 
   function primaryParentId(p) {
     if (p.fatherIds && p.fatherIds.length) return p.fatherIds[0];
@@ -228,8 +233,9 @@ window.Tree = (function () {
   function update(source) {
     const tree = d3.tree().nodeSize([DX, DY]).separation((a, b) => {
       const base = a.parent === b.parent ? 1 : 2;
-      // Leave an extra slot next to anyone showing a spouse companion.
-      return base + ((a.data.companionId || b.data.companionId) ? 1 : 0);
+      // Leave a little extra room next to anyone actually showing a spouse
+      // companion (only when their children are expanded).
+      return base + ((hasVisibleCompanion(a) || hasVisibleCompanion(b)) ? 0.75 : 0);
     });
     tree(root);
 
@@ -294,8 +300,9 @@ window.Tree = (function () {
       }).remove();
 
     // ----- Spouse companions (drawn beside their partner + a marriage line) -----
+    // Only show a spouse where the member's children are being shown (expanded).
     const couples = nodes
-      .filter((d) => d.data.companionId)
+      .filter(hasVisibleCompanion)
       .map((d) => ({ id: d.data.companionId, x: d.x + COUPLE_DX, y: d.y, px: d.x, py: d.y }));
 
     // marriage connector line (avatar-centre to avatar-centre)
