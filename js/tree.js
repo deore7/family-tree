@@ -9,7 +9,7 @@ window.Tree = (function () {
   const AV_R = 30;                    // avatar radius
   const AV_CY = -NODE_H / 2 + 40;     // avatar centre (near the top)
   const DX = 178, DY = 200;           // sibling / generation spacing
-  const COUPLE_DX = 96;               // gap from a person to their spouse companion
+  const COUPLE_DX = 172;              // gap from a person to their spouse companion
 
   let svg, gZoom, gLink, gCouple, gNode, gSpouse, zoom;
   let root, rootData;
@@ -177,6 +177,20 @@ window.Tree = (function () {
     return Store.fullName(Store.get(id));
   }
 
+  // Name shown on a node. Last-level people (no children currently shown) drop
+  // their last name to reduce clutter — except a married-in female, whose last
+  // name marks her natal family and is kept.
+  function nameLabel(id, lastLevel) {
+    if (id === "__ROOT__") return "Ancestors";
+    const p = Store.get(id);
+    if (!p) return "Unknown";
+    const femaleMarriedIn = p.gender === "female" && !!isCompanion[id];
+    if (lastLevel && !femaleMarriedIn) {
+      return (p.firstName || "").trim() || Store.fullName(p);
+    }
+    return Store.fullName(p);
+  }
+
   function genderClass(id) {
     if (id === "__ROOT__") return "root";
     const p = Store.get(id);
@@ -197,8 +211,9 @@ window.Tree = (function () {
   }
 
   // Append the avatar (ring, circle, initials, optional photo) and the
-  // name/sub labels into an entering <g>. `idOf(d)` yields the person id.
-  function appendAvatarAndLabels(enter, idOf) {
+  // name/sub labels into an entering <g>. `idOf(d)` yields the person id;
+  // `nameFn(d)` yields the (possibly last-name-trimmed) display name.
+  function appendAvatarAndLabels(enter, idOf, nameFn) {
     enter.append("circle").attr("class", "avatar-ring")
       .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R + 3);
     enter.append("circle").attr("class", "avatar")
@@ -224,7 +239,7 @@ window.Tree = (function () {
     });
     enter.append("text").attr("class", "name")
       .attr("x", 0).attr("y", AV_CY + AV_R + 24).attr("text-anchor", "middle")
-      .text((d) => truncate(personLabel(idOf(d)), 18));
+      .text((d) => truncate(nameFn(d), 18));
     enter.append("text").attr("class", "sub")
       .attr("x", 0).attr("y", AV_CY + AV_R + 44).attr("text-anchor", "middle")
       .text((d) => subLabel(idOf(d)));
@@ -233,9 +248,9 @@ window.Tree = (function () {
   function update(source) {
     const tree = d3.tree().nodeSize([DX, DY]).separation((a, b) => {
       const base = a.parent === b.parent ? 1 : 2;
-      // Leave a little extra room next to anyone actually showing a spouse
-      // companion (only when their children are expanded).
-      return base + ((hasVisibleCompanion(a) || hasVisibleCompanion(b)) ? 0.75 : 0);
+      // Reserve a full extra slot next to anyone actually showing a spouse
+      // companion (only when their children are expanded) so names don't overlap.
+      return base + ((hasVisibleCompanion(a) || hasVisibleCompanion(b)) ? 1 : 0);
     });
     tree(root);
 
@@ -255,7 +270,8 @@ window.Tree = (function () {
       });
 
     // avatar ring + circle + initials/photo + name/sub labels
-    appendAvatarAndLabels(nodeEnter, (d) => d.data.id);
+    appendAvatarAndLabels(nodeEnter, (d) => d.data.id,
+      (d) => nameLabel(d.data.id, !d.children));
 
     // expand/collapse toggle (only when node has descendants)
     const toggleG = nodeEnter.append("g")
@@ -270,6 +286,13 @@ window.Tree = (function () {
       .attr("transform", (d) => "translate(" + d.x + "," + d.y + ")");
     nodeUpdate.attr("class", (d) =>
       "node gender-" + genderClass(d.data.id) + (d._children ? " collapsed" : ""));
+
+    // Refresh the name: a node's "last level" state (and so whether it shows a
+    // last name) changes as it expands/collapses, so re-evaluate on every update.
+    nodeUpdate.select("text.name")
+      .text((d) => truncate(nameLabel(d.data.id, !d.children), 18));
+    nodeUpdate.select("text.sub")
+      .text((d) => subLabel(d.data.id));
 
     nodeUpdate.select(".toggle")
       .style("display", (d) => (d.children || d._children ? null : "none"));
@@ -322,7 +345,7 @@ window.Tree = (function () {
       .attr("transform", () => "translate(" + source.x0 + "," + source.y0 + ")")
       .style("cursor", "pointer")
       .on("click", (e, d) => onSelect(d.id));
-    appendAvatarAndLabels(spEnter, (d) => d.id);
+    appendAvatarAndLabels(spEnter, (d) => d.id, (d) => nameLabel(d.id, true));
     const spUpdate = spEnter.merge(sp);
     spUpdate.transition().duration(200)
       .attr("transform", (d) => "translate(" + d.x + "," + d.y + ")");
@@ -336,6 +359,16 @@ window.Tree = (function () {
     if (id === "__ROOT__") return "default couple";
     const p = Store.get(id);
     if (!p) return "";
+    if (p.gender === "female") {
+      // Married-in wife (companion): show her maher (parental home) village.
+      if (isCompanion[id]) {
+        return ((p.maher && p.maher.village) || "").trim() || p.village || "";
+      }
+      // Daughter who married out: show her sasar (in-laws' home) village.
+      if (p.married) {
+        return ((p.sasar && p.sasar.village) || "").trim() || p.village || "";
+      }
+    }
     if (p.village) return p.village;
     if (p.dob) return "b. " + p.dob;
     return "";
