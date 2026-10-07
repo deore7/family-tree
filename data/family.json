@@ -4836,8 +4836,10 @@
       "lastName": "",
       "gender": "female",
       "alive": true,
-      "married": false,
-      "spouseIds": [],
+      "married": true,
+      "spouseIds": [
+        "124"
+      ],
       "fatherIds": [
         "dummy-father"
       ],
@@ -4964,7 +4966,7 @@
       "married": false,
       "spouseIds": [],
       "fatherIds": [
-        "dummy-father"
+        "124"
       ],
       "motherIds": [
         "113"
@@ -5005,7 +5007,7 @@
       "married": false,
       "spouseIds": [],
       "fatherIds": [
-        "dummy-father"
+        "124"
       ],
       "motherIds": [
         "113"
@@ -5046,7 +5048,7 @@
       "married": false,
       "spouseIds": [],
       "fatherIds": [
-        "dummy-father"
+        "124"
       ],
       "motherIds": [
         "113"
@@ -5087,7 +5089,7 @@
       "married": false,
       "spouseIds": [],
       "fatherIds": [
-        "dummy-father"
+        "124"
       ],
       "motherIds": [
         "113"
@@ -5259,6 +5261,49 @@
       ],
       "motherIds": [
         "121"
+      ],
+      "dob": "",
+      "dod": "",
+      "photo": "",
+      "village": "",
+      "taluka": "",
+      "district": "",
+      "pincode": "",
+      "phone": "",
+      "current": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "maher": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      },
+      "sasar": {
+        "village": "",
+        "taluka": "",
+        "district": "",
+        "pincode": ""
+      }
+    },
+    "124": {
+      "id": "124",
+      "firstName": "NA",
+      "lastName": "",
+      "gender": "male",
+      "alive": true,
+      "married": true,
+      "spouseIds": [
+        "113"
+      ],
+      "fatherIds": [
+        "dummy-father"
+      ],
+      "motherIds": [
+        "dummy-mother"
       ],
       "dob": "",
       "dod": "",
