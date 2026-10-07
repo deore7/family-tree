@@ -2186,47 +2186,6 @@
         "pincode": ""
       }
     },
-    "50": {
-      "id": "50",
-      "firstName": "",
-      "lastName": "",
-      "gender": "other",
-      "alive": true,
-      "married": false,
-      "spouseIds": [],
-      "fatherIds": [
-        "dummy-father"
-      ],
-      "motherIds": [
-        "dummy-mother"
-      ],
-      "dob": "",
-      "dod": "",
-      "photo": "",
-      "village": "",
-      "taluka": "",
-      "district": "",
-      "pincode": "",
-      "phone": "",
-      "current": {
-        "village": "",
-        "taluka": "",
-        "district": "",
-        "pincode": ""
-      },
-      "maher": {
-        "village": "",
-        "taluka": "",
-        "district": "",
-        "pincode": ""
-      },
-      "sasar": {
-        "village": "",
-        "taluka": "",
-        "district": "",
-        "pincode": ""
-      }
-    },
     "51": {
       "id": "51",
       "firstName": "Jayashree",
@@ -4798,10 +4757,10 @@
         "120"
       ],
       "fatherIds": [
-        "dummy-father"
+        "13"
       ],
       "motherIds": [
-        "dummy-mother"
+        "8"
       ],
       "dob": "",
       "dod": "",
@@ -4841,10 +4800,10 @@
         "124"
       ],
       "fatherIds": [
-        "dummy-father"
+        "13"
       ],
       "motherIds": [
-        "dummy-mother"
+        "8"
       ],
       "dob": "",
       "dod": "",
