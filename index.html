@@ -27,6 +27,7 @@
       <button id="btnZoomOut" class="btn icon" title="Zoom out">−</button>
       <button id="btnZoomIn" class="btn icon" title="Zoom in">＋</button>
       <button id="btnFit" class="btn icon" title="Fit to screen">⤢</button>
+      <button id="btnTable" class="btn" title="People table">📋 Table</button>
       <button id="btnAdd" class="btn" title="Add person" style="display:none">＋ Add</button>
       <button id="btnToken" class="btn" title="GitHub token" style="display:none">🔑</button>
       <button id="btnSave" class="btn" title="Save to GitHub" style="display:none">Save to GitHub</button>
@@ -34,10 +35,15 @@
     </div>
   </header>
 
+  <div id="analyticsBar" class="analytics-bar"></div>
+
   <main>
     <div id="treeContainer" class="tree-container"></div>
     <aside id="detailPanel" class="detail-panel"></aside>
   </main>
+
+  <!-- People table (filterable) -->
+  <div id="peopleTableOverlay" class="table-overlay"></div>
 
   <!-- Add/Edit person modal -->
   <div id="editorModal" class="modal">
@@ -58,6 +64,8 @@
   <script src="js/location.js"></script>
   <script src="js/tree.js"></script>
   <script src="js/person.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/table.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

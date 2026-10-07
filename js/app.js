@@ -18,7 +18,9 @@
     }
     Tree.init("#treeContainer", { onSelect: (id) => Person.showDetail(id) });
     Person.init({ onSave, onDelete, canEdit: () => editMode });
+    PeopleTable.init({ onPick: goTo });
     Tree.render();
+    Analytics.render("#analyticsBar");
     wireToolbar();
     reflectEditState();
   }
@@ -31,6 +33,7 @@
     $("btnZoomIn").onclick = () => Tree.zoomIn();
     $("btnZoomOut").onclick = () => Tree.zoomOut();
     $("btnFit").onclick = () => Tree.fit();
+    $("btnTable").onclick = () => PeopleTable.open();
     $("searchBtn").onclick = doSearch;
     const input = $("searchInput");
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") { hideSuggest(); doSearch(); } });
@@ -91,6 +94,7 @@
     Person.closeEditor();
     markDirty();
     Tree.render(true);
+    Analytics.render("#analyticsBar");
     Person.showDetail(res.person.id);
   }
 
@@ -101,6 +105,7 @@
     Person.hideDetail();
     markDirty();
     Tree.render(true);
+    Analytics.render("#analyticsBar");
   }
 
   // ---------- Commit to GitHub ----------

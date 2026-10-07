@@ -48,6 +48,7 @@
       <button id="btnZoomOut" class="btn icon" title="Zoom out">−</button>
       <button id="btnZoomIn" class="btn icon" title="Zoom in">＋</button>
       <button id="btnFit" class="btn icon" title="Fit to screen">⤢</button>
+      <button id="btnTable" class="btn" title="People table">📋 Table</button>
       <label id="btnLive" class="btn" title="Re-read the CSV file on an interval">
         <input id="liveChk" type="checkbox" style="margin-right:6px" checked>Live
       </label>
@@ -56,10 +57,15 @@
     </div>
   </header>
 
+  <div id="analyticsBar" class="analytics-bar"></div>
+
   <main>
     <div id="treeContainer" class="tree-container"></div>
     <aside id="detailPanel" class="detail-panel"></aside>
   </main>
+
+  <!-- People table (filterable) -->
+  <div id="peopleTableOverlay" class="table-overlay"></div>
 
   <!-- Paste / upload CSV -->
   <div id="csvDrawer" class="csv-drawer">
@@ -84,6 +90,8 @@
   <script src="js/data.js"></script>
   <script src="js/tree.js"></script>
   <script src="js/person.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/table.js"></script>
   <script src="js/csv-import.js"></script>
   <script>
   (function () {
@@ -110,6 +118,7 @@
       // Preserve the current pan/zoom on refreshes; fit on the very first render.
       Tree.render(rendered);
       rendered = true;
+      Analytics.render("#analyticsBar");
       renderWarnings(warnings);
       const n = Object.keys(data.people).length - 2; // minus the two ancestors
       setStatus((label || "Loaded") + " · " + n + " people" +
@@ -209,6 +218,7 @@
       $("btnZoomIn").onclick = () => Tree.zoomIn();
       $("btnZoomOut").onclick = () => Tree.zoomOut();
       $("btnFit").onclick = () => Tree.fit();
+      $("btnTable").onclick = () => PeopleTable.open();
       $("btnReload").onclick = () => {
         manualText = null;               // leave manual mode, go back to the file
         $("liveChk").checked = true; startPolling();
@@ -239,6 +249,7 @@
       // The tree + detail panel are view-only here (no edit callbacks).
       Tree.init("#treeContainer", { onSelect: (id) => Person.showDetail(id) });
       Person.init({ canEdit: () => false });
+      PeopleTable.init({ onPick: goTo });
       wire();
       await pollFile(true);
       startPolling();

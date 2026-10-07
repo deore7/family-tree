@@ -25,6 +25,12 @@ window.Tree = (function () {
     return !!(d.data.companionId && d.children && d.children.length);
   }
 
+  // True when a (companion) spouse has at least one real, non-dummy parent in
+  // the data — i.e. their own parental family can be expanded to.
+  function companionHasParents(id) {
+    return Store.parentsOf(id).some((p) => !Store.isDummy(p.id));
+  }
+
   function primaryParentId(p) {
     if (p.fatherIds && p.fatherIds.length) return p.fatherIds[0];
     if (p.motherIds && p.motherIds.length) return p.motherIds[0];
@@ -346,10 +352,21 @@ window.Tree = (function () {
       .style("cursor", "pointer")
       .on("click", (e, d) => onSelect(d.id));
     appendAvatarAndLabels(spEnter, (d) => d.id, (d) => nameLabel(d.id, true));
+
+    // "+" to expand this spouse's own parental family (only when linked).
+    const spToggle = spEnter.append("g")
+      .attr("class", "toggle")
+      .attr("transform", "translate(0," + (NODE_H / 2) + ")")
+      .on("click", (e, d) => { e.stopPropagation(); focusPerson(d.id, { toParents: true }); });
+    spToggle.append("circle").attr("r", 9);
+    spToggle.append("text").attr("text-anchor", "middle").attr("y", 4).text("+");
+
     const spUpdate = spEnter.merge(sp);
     spUpdate.transition().duration(200)
       .attr("transform", (d) => "translate(" + d.x + "," + d.y + ")");
     spUpdate.attr("class", (d) => "node spouse gender-" + genderClass(d.id));
+    spUpdate.select(".toggle")
+      .style("display", (d) => (companionHasParents(d.id) ? null : "none"));
     sp.exit().remove();
 
     nodes.forEach((d) => { d.x0 = d.x; d.y0 = d.y; });
@@ -404,10 +421,22 @@ window.Tree = (function () {
   }
 
   // Expand every ancestor of a node so it becomes visible, then focus it.
-  function focusPerson(id) {
-    // A spouse companion isn't a tree node — navigate to its partner instead,
-    // but still highlight the companion itself.
-    const navId = isCompanion[id] ? isCompanion[id] : id;
+  function focusPerson(id, opts) {
+    opts = opts || {};
+    // A spouse companion isn't a tree node — normally navigate to its partner,
+    // but still highlight the companion itself. When opts.toParents is set
+    // (the spouse's "+"), climb the companion's OWN parent chain instead so we
+    // reveal and centre on their parental family.
+    let navId = isCompanion[id] && !opts.toParents ? isCompanion[id] : id;
+    let highlightId = id;
+    if (opts.toParents) {
+      let pp = primaryParentId(Store.get(id) || {});
+      if (pp && !Store.isDummy(pp) && Store.get(pp)) {
+        highlightId = pp;
+        // A companion parent isn't its own node — centre on their partner node.
+        navId = isCompanion[pp] ? isCompanion[pp] : pp;
+      }
+    }
     // Walk up primary-parent chain and expand each ancestor.
     const path = [];
     let cur = Store.get(navId);
@@ -436,7 +465,7 @@ window.Tree = (function () {
     update(root);
 
     const target = root.descendants().find((d) => d.data.id === navId);
-    if (target) centerOn(target, id);
+    if (target) centerOn(target, highlightId);
   }
 
   function centerOn(d, id) {
