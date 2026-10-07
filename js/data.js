@@ -59,18 +59,23 @@ window.Store = (function () {
     });
   }
 
+  // Replace the in-memory model from a raw { version, people } object
+  // (people keyed by id). Normalizes everyone and seeds the default ancestors.
+  function loadData(raw) {
+    state = { version: (raw && raw.version) || 1, people: {} };
+    Object.values((raw && raw.people) || {}).forEach((p) => {
+      state.people[p.id] = normalizePerson(p);
+    });
+    ensureDummies();
+    return state;
+  }
+
   async function load() {
     // Cache-bust so freshly committed data shows up without a hard refresh.
     const url = CONFIG.dataPath + "?t=" + Date.now();
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("Could not load " + CONFIG.dataPath + " (" + res.status + ")");
-    const raw = await res.json();
-    state = { version: raw.version || 1, people: {} };
-    Object.values(raw.people || {}).forEach((p) => {
-      state.people[p.id] = normalizePerson(p);
-    });
-    ensureDummies();
-    return state;
+    return loadData(await res.json());
   }
 
   function ensureDummies() {
@@ -245,7 +250,7 @@ window.Store = (function () {
 
   return {
     DUMMY_FATHER, DUMMY_MOTHER,
-    load, all, get, getState, isDummy, fullName, fatherFirstName, nameWithFather, blankPerson,
+    load, loadData, all, get, getState, isDummy, fullName, fatherFirstName, nameWithFather, blankPerson,
     childrenOf, sonsOf, daughtersOf, parentsOf, spousesOf,
     validate, upsert, remove, serialize, newId,
   };

@@ -30,6 +30,17 @@ python -m http.server 8000
 Open <http://localhost:8000>. To try it from your phone on the same Wi‑Fi, use your PC's LAN IP
 (e.g. `http://192.168.1.50:8000`). Saving to GitHub works from `localhost` too.
 
+## Live CSV preview (`csv.html`)
+Open <http://localhost:8000/csv.html> to render the tree straight from
+[`data/family_template.csv`](data/family_template.csv) — no JSON step. It parses the CSV in the
+browser (same rules as the converter below) and **re-reads the file every couple of seconds**,
+so edits you save to the CSV show up in the tree within a second or two (toggle **Live** off to
+stop polling, or hit **Reload**). Use **Edit CSV** to paste or upload a CSV and preview it as you
+type — nothing is written to disk. Point it at a different file with `?csv=path/to/file.csv`.
+It's **view-only** (no editing/saving) — the main page (`index.html`) is still the editor.
+Must be served over http (`python -m http.server`); opening the file directly won't let it read
+the CSV.
+
 ## Deploy to GitHub Pages
 1. Create a GitHub repo (e.g. `family-tree`) and push these files to the `main` branch.
 2. Repo **Settings → Pages → Build and deployment**: Source = *Deploy from a branch*,
