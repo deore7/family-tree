@@ -219,7 +219,7 @@ window.Tree = (function () {
   // Append the avatar (ring, circle, initials, optional photo) and the
   // name/sub labels into an entering <g>. `idOf(d)` yields the person id;
   // `nameFn(d)` yields the (possibly last-name-trimmed) display name.
-  function appendAvatarAndLabels(enter, idOf, nameFn) {
+  function appendAvatarAndLabels(enter, idOf, nameFn, subFn) {
     enter.append("circle").attr("class", "avatar-ring")
       .attr("cx", 0).attr("cy", AV_CY).attr("r", AV_R + 3);
     enter.append("circle").attr("class", "avatar")
@@ -248,7 +248,7 @@ window.Tree = (function () {
       .text((d) => truncate(nameFn(d), 18));
     enter.append("text").attr("class", "sub")
       .attr("x", 0).attr("y", AV_CY + AV_R + 44).attr("text-anchor", "middle")
-      .text((d) => subLabel(idOf(d)));
+      .text((d) => (subFn ? subFn(d) : subLabel(idOf(d))));
   }
 
   function update(source) {
@@ -277,7 +277,8 @@ window.Tree = (function () {
 
     // avatar ring + circle + initials/photo + name/sub labels
     appendAvatarAndLabels(nodeEnter, (d) => d.data.id,
-      (d) => nameLabel(d.data.id, !d.children));
+      (d) => nameLabel(d.data.id, !d.children),
+      (d) => subLabel(d.data.id, !d.children));
 
     // expand/collapse toggle (only when node has descendants)
     const toggleG = nodeEnter.append("g")
@@ -298,7 +299,7 @@ window.Tree = (function () {
     nodeUpdate.select("text.name")
       .text((d) => truncate(nameLabel(d.data.id, !d.children), 18));
     nodeUpdate.select("text.sub")
-      .text((d) => subLabel(d.data.id));
+      .text((d) => subLabel(d.data.id, !d.children));
 
     nodeUpdate.select(".toggle")
       .style("display", (d) => (d.children || d._children ? null : "none"));
@@ -351,7 +352,8 @@ window.Tree = (function () {
       .attr("transform", () => "translate(" + source.x0 + "," + source.y0 + ")")
       .style("cursor", "pointer")
       .on("click", (e, d) => onSelect(d.id));
-    appendAvatarAndLabels(spEnter, (d) => d.id, (d) => nameLabel(d.id, true));
+    appendAvatarAndLabels(spEnter, (d) => d.id, (d) => nameLabel(d.id, true),
+      (d) => subLabel(d.id, true));
 
     // "+" to expand this spouse's own parental family (only when linked).
     const spToggle = spEnter.append("g")
@@ -372,10 +374,16 @@ window.Tree = (function () {
     nodes.forEach((d) => { d.x0 = d.x; d.y0 = d.y; });
   }
 
-  function subLabel(id) {
+  function subLabel(id, lastLevel) {
     if (id === "__ROOT__") return "default couple";
     const p = Store.get(id);
     if (!p) return "";
+    // An expanded parent/grandparent (their children are shown): show their
+    // maher (parental home) village below the name.
+    if (!lastLevel) {
+      const maher = ((p.maher && p.maher.village) || "").trim();
+      if (maher) return maher;
+    }
     if (p.gender === "female") {
       // Married-in wife (companion): show her maher (parental home) village.
       if (isCompanion[id]) {
